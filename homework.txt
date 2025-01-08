@@ -1,0 +1,22 @@
+Homework
+
+Wikipedia
+https://en.m.wikipedia.org/wiki/Leap_year#:~:text=On%201%20January%2045%20BC,leap%20day%20every%204%20years.
+
+Julian Calendar 
+“””
+On 1 January 45 BC, by edict, Julius Caesar reformed the historic Roman calendar to make it a consistent solar calendar (rather than one which was neither strictly lunar nor strictly solar), thus removing the need for frequent intercalary months. His rule for leap years was a simple one: add a leap day every 4 years.
+“””
+
+Wikipedia 
+https://en.m.wikipedia.org/wiki/Proleptic_Gregorian_calendar
+
+"""
+Gregorian… went into effect in October 1582
+
+Every year that is exactly divisible by four is a leap year, except for years that are exactly divisible by 100, but these centurial years are leap years if they are exactly divisible by 400. For example, the years 1700, 1800, and 1900 are not leap years, but the years 1600 and 2000 are.
+
+For example, the birthday of U.S. President George Washington was originally dated 11 February 1731
+…
+After Great Britain switched to the Gregorian calendar, Washington's birthday was dated 22 February 1732 proleptically, according to the Gregorian calendar applied backward. This remains the modern dating of his birthday.
+“””
