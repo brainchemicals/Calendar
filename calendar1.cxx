@@ -190,6 +190,66 @@ ostream& operator<<(ostream& os, const Date&d)
 					<< ',' << d.year()
 					<< ')';
 }
+// end of Date class
+
+
+//
+// time point
+//
+
+/*
+check mktime still gives a valid date
+make a new Date from puttime and check
+would a standard library function go wrong?
+
+if getDayOfWeek returns an int
+if tm returns possibly -1
+can i link back to a date?
+*/
+
+tm makeTM(
+const Date date)
+{
+	// must initialise with {} or it is garbage
+	tm get_tm{};
+	string sd;
+	int d = date.day();
+	int m = (int)date.month();
+	int y = date.year();
+	
+	sd += to_string(y)+"-";
+	sd += to_string(m)+"-";
+	sd += to_string(d);
+	
+	istringstream ss{sd};
+	ss >> get_time(&get_tm, "%y-%m-%d");
+	// a crappy check at the moment
+	
+	
+	// works with this
+	mktime(&get_tm);
+	
+	return get_tm;
+}
+
+// use chrono to find Mon-Sun
+// from Date string
+int getDayOfWeek(const Date date)
+{
+	tm get_day = makeTM(date);
+	// we dont check it the return works
+
+	stringstream grab_number;
+	grab_number << put_time(&get_day, "%w");
+	string sday = grab_number.str();
+	int iday = stoi(sday);
+	
+	return iday;
+}
+
+//
+// print
+//
 
 string printMonth(const Date& d)
 {
@@ -211,47 +271,10 @@ string printMonth(const Date& d)
 	}
 }
 
-tm makeTM(
-const Date date)
-{
-	// must initialise with {} or it is garbage
-	tm get_tm{};
-	string sd;
-	int d = date.day();
-	int m = (int)date.month();
-	int y = date.year();
-	
-	sd += to_string(y)+"-";
-	sd += to_string(m)+"-";
-	sd += to_string(d);
-	
-	istringstream ss{sd};
-	ss >> get_time(&get_tm, "%y-%m-%d");
-	if(ss.fail()) nullptr;
-	
-	// works with this
-	mktime(&get_tm);
-	
-	return get_tm;
-}
-
-// use chrono to find Mon-Sun
-// from Date string
-int getDayOfWeek(const Date date)
-{
-	tm get_day = makeTM(date);
-	
-	stringstream grab_number;
-	grab_number << put_time(&get_day, "%w");
-	string sday = grab_number.str();
-	int iday = stoi(sday);
-	
-	return iday;
-}
-
 void printHeader(
 const Date date)
 {
+	// my console wasn't working
 	int mfs = 6;
 	int tt = 7;
 	int ws = 9;
@@ -277,22 +300,20 @@ const Date date)
 	cout << "\n\n";
 }
 
-void printWeek(
-const Date date,
-int day_of_week)
+void printWeek(const Date date)
 {
 	// we want the beginning of the month
 	Date begin { date.year(),
 		date.month(),
 		1 };
 	// which enum?
-	int x = getDayOfWeek(begin);
-	Day day = (Day)((int)x);
+	int first_day = getDayOfWeek(begin);
+	Day day = (Day)((int)first_day);
 	
 	cout << "|";
 	
 	// fill last month
-	for(int i=0; i < x; ++i)
+	for(int i=0; i < first_day; ++i)
 	{
 		cout << setw(3) << setfill('X') << "X" << "|";
 	}
@@ -335,6 +356,11 @@ int day_of_week)
 	}
 }
 
+
+//
+// main
+//
+
 int main(int argc, char *argv[])
 {
 	chrono::time_point then{
@@ -344,18 +370,16 @@ int main(int argc, char *argv[])
 		
 	time_t t2 = 0;
 		
-	Date date{2025, Month::Oct, 13};
-	
-	
-	int test = getDayOfWeek(date);
-	printHeader(date);
-	Day day = (Day)int(test);
-	printWeek(date, test);
-	
+	Date date{2025, Month::Jan, 8};
 	
 	//
 	// make the calendar
 	//
+	
+	printHeader(date);
+	printWeek(date);
+	
+	// fast forward stuff
 	
 	int count = 10;
 	while(count>11)
@@ -375,6 +399,8 @@ int main(int argc, char *argv[])
 		
 		// no --count
 	}
+	
+	cout << "\n\n";
 	
 	return 0;
 }
