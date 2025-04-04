@@ -319,7 +319,10 @@ void printWeek(const Date date)
 	}
 	
 	// number days
-	for(int i=0; i<begin.days();++i)
+	// bug: don't use begin.days()
+	// use const
+	//for(int i=0; i<begin.days(); ++i)
+	for(int i=0; i<date.days();++i)
 	{
 		cout << setw(3)<< setfill('X')
 			<< begin.day() << "|";
