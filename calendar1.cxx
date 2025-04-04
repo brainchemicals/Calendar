@@ -366,11 +366,8 @@ void printWeek(const Date date)
 
 int main(int argc, char *argv[])
 {
-	chrono::time_point then{
-			chrono::system_clock::now()};	
-	time_t t =
-		chrono::system_clock::to_time_t(then);
-		
+	chrono::time_point<chrono::system_clock> then{chrono::system_clock::now()};	
+	time_t t = chrono::system_clock::to_time_t(then);
 	time_t t2 = 0;
 		
 	Date date{2025, Month::Jan, 8};
@@ -387,8 +384,7 @@ int main(int argc, char *argv[])
 	int count = 10;
 	while(count>11)
 	{
-		chrono::time_point now{
-			chrono::system_clock::now()};
+		chrono::time_point<chrono::system_clock> now{chrono::system_clock::now()};
 		t2 = chrono::system_clock::to_time_t(now);
 		
 		if(t2>t)
